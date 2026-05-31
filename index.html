@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday Megha 💖</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, sans-serif;
+}
+
+body{
+    background:linear-gradient(135deg,#ff9ecf,#ffd6eb);
+    overflow:hidden;
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.card{
+    background:white;
+    width:90%;
+    max-width:700px;
+    padding:40px;
+    border-radius:25px;
+    text-align:center;
+    box-shadow:0 10px 30px rgba(0,0,0,0.2);
+    z-index:10;
+}
+
+h1{
+    color:#ff4081;
+    margin-bottom:10px;
+}
+
+p{
+    color:#555;
+    line-height:1.7;
+    margin:20px 0;
+}
+
+button{
+    background:#ff4081;
+    color:white;
+    border:none;
+    padding:12px 25px;
+    border-radius:30px;
+    cursor:pointer;
+    font-size:1rem;
+}
+
+/* Floating Hearts */
+.heart{
+    position:absolute;
+    color:#ff4d88;
+    font-size:25px;
+    animation:floatHeart linear infinite;
+}
+
+@keyframes floatHeart{
+    from{
+        transform:translateY(100vh);
+        opacity:1;
+    }
+    to{
+        transform:translateY(-120px);
+        opacity:0;
+    }
+}
+
+/* Cake */
+.cake{
+    margin:20px auto;
+    position:relative;
+    width:120px;
+    height:120px;
+}
+
+.layer1,.layer2{
+    position:absolute;
+    left:50%;
+    transform:translateX(-50%);
+    background:#ff9fc9;
+    border-radius:8px;
+}
+
+.layer1{
+    width:120px;
+    height:50px;
+    bottom:0;
+}
+
+.layer2{
+    width:90px;
+    height:40px;
+    bottom:50px;
+}
+
+.candle{
+    position:absolute;
+    width:10px;
+    height:35px;
+    background:white;
+    left:55px;
+    bottom:90px;
+}
+
+.flame{
+    position:absolute;
+    width:15px;
+    height:15px;
+    background:gold;
+    border-radius:50%;
+    left:-2px;
+    top:-12px;
+    animation:flicker 0.4s infinite alternate;
+}
+
+@keyframes flicker{
+    from{transform:scale(1);}
+    to{transform:scale(1.3);}
+}
+
+/* Fireworks Canvas */
+canvas{
+    position:fixed;
+    inset:0;
+    z-index:1;
+}
+</style>
+</head>
+<body>
+
+<canvas id="fireworks"></canvas>
+
+<!-- Floating Hearts -->
+<div class="heart" style="left:10%;animation-duration:7s;">💖</div>
+<div class="heart" style="left:25%;animation-duration:9s;">💕</div>
+<div class="heart" style="left:40%;animation-duration:8s;">💖</div>
+<div class="heart" style="left:60%;animation-duration:10s;">💕</div>
+<div class="heart" style="left:80%;animation-duration:7s;">💖</div>
+
+<div class="card">
+    <h1>🎂 Happy Birthday Megha! 🎂</h1>
+
+    <div class="cake">
+        <div class="layer1"></div>
+        <div class="layer2"></div>
+        <div class="candle">
+            <div class="flame"></div>
+        </div>
+    </div>
+
+    <p>
+        Dear Megha 💖,<br><br>
+        Wishing you a magical birthday filled with joy,
+        laughter, happiness, and lots of cake! 🎂✨<br>
+        You are the sweetest sister ever and deserve the
+        most wonderful day. 🌸💕
+    </p>
+
+    <button onclick="showWish()">Open Surprise 🎁</button>
+</div>
+
+<script>
+function showWish(){
+    alert("💖 Happy Birthday Megha! 💖\n\nMay all your dreams come true! 🎂✨🎆");
+}
+
+/* Simple Fireworks */
+const canvas = document.getElementById("fireworks");
+const ctx = canvas.getContext("2d");
+
+canvas.width = innerWidth;
+canvas.height = innerHeight;
+
+let particles = [];
+
+function createFirework(){
+    const x = Math.random() * canvas.width;
+    const y = Math.random() * canvas.height/2;
+
+    for(let i=0;i<60;i++){
+        particles.push({
+            x,y,
+            dx:(Math.random()-0.5)*6,
+            dy:(Math.random()-0.5)*6,
+            life:100
+        });
+    }
+}
+
+setInterval(createFirework,1000);
+
+function animate(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+
+    particles.forEach((p,index)=>{
+        p.x += p.dx;
+        p.y += p.dy;
+        p.life--;
+
+        ctx.beginPath();
+        ctx.arc(p.x,p.y,3,0,Math.PI*2);
+        ctx.fillStyle=`hsl(${Math.random()*360},100%,60%)`;
+        ctx.fill();
+
+        if(p.life<=0){
+            particles.splice(index,1);
+        }
+    });
+
+    requestAnimationFrame(animate);
+}
+
+animate();
+</script>
+
+</body>
+</html>
